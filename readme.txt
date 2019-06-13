@@ -17,13 +17,13 @@ manual.tjs を参照してください。
 
 付属のプロジェクトファイルを使用する場合，
 
-..¥tp_stub.*
-..¥ncbind
-..¥zlib
+..\tp_stub.*
+..\ncbind
+..\zlib
 
 が必要です。また，DLLの出力先は
 
-..¥..¥..¥..¥bin¥win32¥plugin
+..\..\..\..\bin\win32\plugin
 
 となります。
 作業コピーを https://sv.kikyou.info/svn/kirikiri2/trunk/kirikiri2 から

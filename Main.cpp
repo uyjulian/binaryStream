@@ -52,7 +52,7 @@ class BinaryStream
 		{
 			adler = ::adler32(0L, Z_NULL, 0);
 		}
-		virtual ‾CopyCommand() {}
+		virtual ~CopyCommand() {}
 
 		inline void calcSum(tjs_uint8 const *buf, tjs_uint len) {
 			adler = ::adler32(adler, buf, len);
@@ -185,7 +185,7 @@ class BinaryStream
 		z_stream z;
 	public:
 		ZlibCommand(BinaryStream *owner, tjs_char const *name) : CopyCommand(owner, name), initialized(false), zbuf(0), zlen(0), wbufsize(COMPRESS_BUFFER_SIZE) {}
-		virtual ‾ZlibCommand() { finish(true); }
+		virtual ~ZlibCommand() { finish(true); }
 	protected:
 		void setup() {
 			initialized = true;
@@ -273,7 +273,7 @@ class BinaryStream
 
 public:
 	BinaryStream() : stream(0), storage(), mode(-1), filterDLL(0), hasCallback(false), callback(0,0) {}
-	virtual ‾BinaryStream() {
+	virtual ~BinaryStream() {
 		resetCopyFilter();
 		close();
 	}

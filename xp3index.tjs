@@ -76,8 +76,8 @@ Storages.getXP3ArchiveIndex = function (name)
 
 		st.seek(0, BinaryStream.bsSeekSet);
 		var XP3Mark = [
-			0x58/*'X'*/, 0x50/*'P'*/, 0x33/*'3'*/, 0x0d/*'¥r'*/,
-			0x0a/*'¥n'*/, 0x20/*' '*/, 0x0a/*'¥n'*/, 0x1a/*EOF*/,
+			0x58/*'X'*/, 0x50/*'P'*/, 0x33/*'3'*/, 0x0d/*'\r'*/,
+			0x0a/*'\n'*/, 0x20/*' '*/, 0x0a/*'\n'*/, 0x1a/*EOF*/,
 			0x8b, 0x67, 0x01 ];
 		var memcmp = function(a, b, ofs, len) {
 			for (var i = 0; i < len; i++) if (a[i] != b[i+ofs]) return a[i] - b[i+ofs];
