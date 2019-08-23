@@ -1,3 +1,11 @@
+#############################################
+##                                         ##
+##    Copyright (C) 2019-2019 Julian Uy    ##
+##  https://sites.google.com/site/awertyb  ##
+##                                         ##
+## See details of license at "license.txt" ##
+##                                         ##
+#############################################
 
 CC = i686-w64-mingw32-gcc
 CXX = i686-w64-mingw32-g++
@@ -19,9 +27,14 @@ LDLIBS +=
 	@printf '\t%s %s\n' CXX $<
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
-SOURCES := ../tp_stub.cpp ../ncbind/ncbind.cpp Main.cpp external/zlib/adler32.c external/zlib/compress.c external/zlib/crc32.c external/zlib/deflate.c external/zlib/gzclose.c external/zlib/gzlib.c external/zlib/gzread.c external/zlib/gzwrite.c external/zlib/infback.c external/zlib/inffast.c external/zlib/inflate.c external/zlib/inftrees.c external/zlib/trees.c external/zlib/uncompr.c external/zlib/zutil.c
+%.o: %.rc
+	@printf '\t%s %s\n' WINDRES $<
+	$(WINDRES) $(WINDRESFLAGS) $< $@
+
+SOURCES := ../tp_stub.cpp ../ncbind/ncbind.cpp Main.cpp binaryStream.rc external/zlib/adler32.c external/zlib/compress.c external/zlib/crc32.c external/zlib/deflate.c external/zlib/gzclose.c external/zlib/gzlib.c external/zlib/gzread.c external/zlib/gzwrite.c external/zlib/infback.c external/zlib/inffast.c external/zlib/inflate.c external/zlib/inftrees.c external/zlib/trees.c external/zlib/uncompr.c external/zlib/zutil.c
 OBJECTS := $(SOURCES:.c=.o)
 OBJECTS := $(OBJECTS:.cpp=.o)
+OBJECTS := $(OBJECTS:.rc=.o)
 
 BINARY ?= binaryStream.dll
 ARCHIVE ?= binaryStream.$(GIT_TAG).7z
