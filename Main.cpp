@@ -7,6 +7,10 @@
 #define COPY_BUFFER_SIZE     (1024*1024)
 #define COMPRESS_BUFFER_SIZE (1024*1024)
 
+#ifdef __GNUC__
+#define __stdcall __attribute__((stdcall))
+#endif // __GNUC__
+
 // XP3ArchiveAttractFilter_v2
 typedef void (__stdcall *FilterProc)(tjs_uint32 hash, tjs_uint64 offset, void * buffer, long bufferlen);
 
