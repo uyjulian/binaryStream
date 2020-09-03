@@ -1,6 +1,8 @@
+#if 0
 #include <windows.h>
+#endif
 #include <zlib.h>
-#include "ncbind.hpp"
+#include "ncbind/ncbind.hpp"
 
 #define COPY_BUFFER_SIZE     (1024*1024)
 #define COMPRESS_BUFFER_SIZE (1024*1024)
@@ -13,7 +15,11 @@ class BinaryStream
 	IStream *stream;
 	ttstr storage;
 	int mode;
+#if 0
 	HMODULE    filterDLL;
+#else
+	int    filterDLL;
+#endif
 	bool hasCallback;
 	tTJSVariantClosure callback;
 
@@ -134,8 +140,10 @@ class BinaryStream
 				if (elm.HasValue(key, 0, &type)) {
 					switch (type) {
 					case tvtVoid: break;
+#if 0
 					case tvtString:  filterProc = owner->getFilterProc(        elm.GetValue(key, ncbTypedefs::Tag<ttstr     >())); break;
 					case tvtInteger: filterProc = reinterpret_cast<FilterProc>(elm.GetValue(key, ncbTypedefs::Tag<tTVInteger>())); break;
+#endif
 					default:
 						error(TJS_W("invalid filter type"));
 						break;
@@ -189,7 +197,7 @@ class BinaryStream
 	protected:
 		void setup() {
 			initialized = true;
-			::ZeroMemory(&z, sizeof(z));
+			memset(&z, 0, sizeof(z));
 			if (zinit(&z) != Z_OK) error(z.msg, TJS_W(": setup"));
 			zlen = wbufsize;
 			zbuf = new tjs_uint8[zlen];
@@ -274,7 +282,9 @@ class BinaryStream
 public:
 	BinaryStream() : stream(0), storage(), mode(-1), filterDLL(0), hasCallback(false), callback(0,0) {}
 	virtual ~BinaryStream() {
+#if 0
 		resetCopyFilter();
+#endif
 		close();
 	}
 
@@ -546,6 +556,7 @@ public:
 		return TJS_SUCCEEDED(callback.FuncCall(0, NULL, NULL, &result, 2, p, NULL)) && result.operator bool();
 	}
 
+#if 0
 	void setFilter(tjs_char const *dll) {
 		resetCopyFilter();
 		if (!dll || dll[0] == 0) return;
@@ -564,16 +575,19 @@ public:
 		if (!r) error(ttstr(TJS_W("filter proc not found: ")) + proc);
 		return r;
 	}
+#endif
 
 	static void error(ttstr const &message) {
 		ttstr concat = ttstr(TJS_W("BinaryStream: ")) + message;
 		TVPThrowExceptionMessage(concat.c_str());
 	}
 protected:
+#if 0
 	void resetCopyFilter() {
 		if (filterDLL) ::FreeLibrary(filterDLL);
 		/**/filterDLL  = 0;
 	}
+#endif
 
 	static inline tjs_uint streamRead (IStream *s, tjs_uint8       *buf, tjs_uint len) {
 		if (!s) error(TJS_W("stream not opened."));
@@ -613,7 +627,9 @@ NCB_REGISTER_CLASS(BinaryStream)
 	RawCallback(TJS_W("compress"),   &Class::compress,   0);
 	RawCallback(TJS_W("decompress"), &Class::decompress, 0);
 	Method(TJS_W("setProgressCallback"),  &Class::setProgressCallback);
+#if 0
 	Method(TJS_W("setFilter"),            &Class::setFilter);
+#endif
 
 	RawCallback(TJS_W("readI8"),    &Class::readI8,     0);
 	RawCallback(TJS_W("readI16LE"), &Class::readI16LE,  0);
