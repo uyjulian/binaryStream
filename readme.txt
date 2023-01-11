@@ -1,44 +1,26 @@
-Title: binaryStream ƒvƒ‰ƒOƒCƒ“
+Title: binaryStream ãƒ—ãƒ©ã‚°ã‚¤ãƒ³
 Author: miahmie
 
-œ‚±‚ê‚Í‰½‚©H
+â—ã“ã‚Œã¯ä½•ã‹ï¼Ÿ
 
-ƒoƒCƒiƒŠƒtƒ@ƒCƒ‹‚ðˆµ‚¤‚½‚ß‚Ìƒvƒ‰ƒOƒCƒ“‚Å‚·B
+ãƒã‚¤ãƒŠãƒªãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ‰±ã†ãŸã‚ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã§ã™ã€‚
 
-¦ƒfƒoƒbƒO•s‘«‚Ì‚½‚ßC“®ì‚É–â‘è‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
-
-
-œŽg‚¢•û
-
-manual.tjs ‚ðŽQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+â€»ãƒ‡ãƒãƒƒã‚°ä¸è¶³ã®ãŸã‚ï¼Œå‹•ä½œã«å•é¡ŒãŒã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
 
 
-œƒRƒ“ƒpƒCƒ‹‚É‚Â‚¢‚Ä
+â—ä½¿ã„æ–¹
 
-•t‘®‚ÌƒvƒƒWƒFƒNƒgƒtƒ@ƒCƒ‹‚ðŽg—p‚·‚éê‡C
+manual.tjs ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
 
-..\tp_stub.*
-..\ncbind
-..\zlib
+â—ã‚µãƒ³ãƒ—ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒˆã«ã¤ã„ã¦
 
-‚ª•K—v‚Å‚·B‚Ü‚½CDLL‚Ìo—Íæ‚Í
-
-..\..\..\..\bin\win32\plugin
-
-‚Æ‚È‚è‚Ü‚·B
-ì‹ÆƒRƒs[‚ð https://sv.kikyou.info/svn/kirikiri2/trunk/kirikiri2 ‚©‚ç
-ƒ`ƒFƒbƒNƒAƒEƒg‚µ‚Ä‚ ‚éê‡‚Í–â‘è‚ ‚è‚Ü‚¹‚ñB
+XP3ã®ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–å†…ãƒ•ã‚¡ã‚¤ãƒ«åä¸€è¦§ã‚’è‡ªåŠ›ã§å–å¾—ã™ã‚‹ã‚µãƒ³ãƒ—ãƒ«
+xp3index.tjs ã‚’å‚è€ƒã«ã—ã¦ãã ã•ã„ã€‚ï¼ˆè¦è¿½åŠ ãƒ—ãƒ©ã‚°ã‚¤ãƒ³memfile.dllï¼‰
+# ã“ã†ã„ã†ã®ã¯å‰é‡Œå‰é‡Œæœ¬ä½“ã‹ã‚‰ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã®ãƒ•ã‚¡ã‚¤ãƒ«åä¸€è¦§ã‚’å–å¾—ã§ãã‚‹ã‚ˆã†ã«
+# æ‹¡å¼µã™ã‚‹ã®ãŒå¦¥å½“ã‹ã¨æ€ã„ã¾ã™ãŒï¼Œã‚ãã¾ã§ã‚µãƒ³ãƒ—ãƒ«ã¨ã„ã†ã“ã¨ã§...
 
 
-œƒTƒ“ƒvƒ‹ƒXƒNƒŠƒvƒg‚É‚Â‚¢‚Ä
+â—ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
 
-XP3‚ÌƒA[ƒJƒCƒu“àƒtƒ@ƒCƒ‹–¼ˆê——‚ðŽ©—Í‚ÅŽæ“¾‚·‚éƒTƒ“ƒvƒ‹
-xp3index.tjs ‚ðŽQl‚É‚µ‚Ä‚­‚¾‚³‚¢Bi—v’Ç‰Áƒvƒ‰ƒOƒCƒ“memfile.dllj
-# ‚±‚¤‚¢‚¤‚Ì‚Í‹g—¢‹g—¢–{‘Ì‚©‚çƒA[ƒJƒCƒu‚Ìƒtƒ@ƒCƒ‹–¼ˆê——‚ðŽæ“¾‚Å‚«‚é‚æ‚¤‚É
-# Šg’£‚·‚é‚Ì‚ª‘Ã“–‚©‚ÆŽv‚¢‚Ü‚·‚ªC‚ ‚­‚Ü‚ÅƒTƒ“ƒvƒ‹‚Æ‚¢‚¤‚±‚Æ‚Å...
-
-
-œƒ‰ƒCƒZƒ“ƒX
-
-‚±‚Ìƒvƒ‰ƒOƒCƒ“‚Ìƒ‰ƒCƒZƒ“ƒX‚Í‹g—¢‹g—¢–{‘Ì‚É€‹’‚µ‚Ä‚­‚¾‚³‚¢B
+ã“ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã®ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ã¯å‰é‡Œå‰é‡Œæœ¬ä½“ã«æº–æ‹ ã—ã¦ãã ã•ã„ã€‚
 
