@@ -189,7 +189,7 @@ class BinaryStream
 	protected:
 		void setup() {
 			initialized = true;
-			::ZeroMemory(&z, sizeof(z));
+			::memset(&z, 0, sizeof(z));
 			if (zinit(&z) != Z_OK) error(z.msg, TJS_W(": setup"));
 			zlen = wbufsize;
 			zbuf = new tjs_uint8[zlen];
