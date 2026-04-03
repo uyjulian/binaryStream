@@ -10,7 +10,7 @@ typedef void (__stdcall *FilterProc)(tjs_uint32 hash, tjs_uint64 offset, void * 
 
 class BinaryStream
 {
-	IStream *stream;
+	iTJSBinaryStream *stream;
 	ttstr storage;
 	int mode;
 	HMODULE    filterDLL;
@@ -83,13 +83,11 @@ class BinaryStream
 		}
 	private:
 		void main(ttstr file) {
-			IStream *in = TVPCreateIStream(file, TJS_BS_READ);
+			iTJSBinaryStream *in = TVPCreateStream(file, TJS_BS_READ);
 			if (!in) error(file, TJS_W(": storage not found"));
 			try {
 				if (inputOffset > 0) {
-					LARGE_INTEGER set;
-					set.QuadPart = inputOffset;
-					in->Seek(set, STREAM_SEEK_SET, NULL);
+					in->Seek(inputOffset, TJS_BS_SEEK_SET);
 				}
 				tjs_uint8 *buf = new tjs_uint8[rbufsize];
 				try {
@@ -116,10 +114,10 @@ class BinaryStream
 				}
 				delete[] buf;
 			} catch (...) {
-				in->Release();
+				in->Destruct();
 				throw;
 			}
-			in->Release();
+			in->Destruct();
 		}
 
 	protected:
@@ -302,7 +300,7 @@ public:
 	 */
 	void open(tjs_char const *storage, int mode) {
 		close();
-		stream = TVPCreateIStream(storage, mode & TJS_BS_ACCESS_MASK);
+		stream = TVPCreateStream(storage, mode & TJS_BS_ACCESS_MASK);
 		if (stream) {
 			this->storage = storage;
 			this->mode    = mode;
@@ -318,7 +316,7 @@ public:
 		if (stream) {
 			storage = TJS_W("");
 			mode    = -1;
-			stream->Release();
+			stream->Destruct();
 			stream  = 0;
 		}
 	}
@@ -330,29 +328,17 @@ public:
 	 * @return       移動後の位置
 	 */
 	tjs_int64 seek(tjs_int64 pos, int whence) {
-		ULONG org;
-		switch (whence) {
-		case TJS_BS_SEEK_SET: org = STREAM_SEEK_SET; break;
-		case TJS_BS_SEEK_CUR: org = STREAM_SEEK_CUR; break;
-		case TJS_BS_SEEK_END: org = STREAM_SEEK_END; break;
-		default:
+		if (whence < TJS_BS_SEEK_SET || whence > TJS_BS_SEEK_END) {
 			error(TJS_W("invalid whence value."));
-			break;
 		}
-		LARGE_INTEGER  move;
-		ULARGE_INTEGER newpos;
-
-		move.QuadPart = pos;
-		stream->Seek(move, org, &newpos);
-
-		return newpos.QuadPart;
+		return (tjs_int64)stream->Seek(pos, whence);
 	}
 
 	/**
 	 * ストリームの現在のポジションを取得する
 	 * @return 位置
 	 */
-	tjs_int64 tell() { return seek(0, STREAM_SEEK_CUR); }
+	tjs_int64 tell() { return seek(0, TJS_BS_SEEK_CUR); }
 
 
 	/**
@@ -552,7 +538,7 @@ public:
 
 		ttstr file = TVPGetPlacedPath(dll);
 		TVPGetLocalName(file);
-		filterDLL = ::LoadLibraryW(file.c_str());
+		filterDLL = ::LoadLibraryW((const wchar_t*)file.c_str());
 		if (!filterDLL) error(ttstr(TJS_W("filter DLL not found: ")) + dll);
 	}
 	FilterProc getFilterProc(ttstr const &proc) {
@@ -575,21 +561,19 @@ protected:
 		/**/filterDLL  = 0;
 	}
 
-	static inline tjs_uint streamRead (IStream *s, tjs_uint8       *buf, tjs_uint len) {
+	static inline tjs_uint streamRead (iTJSBinaryStream *s, tjs_uint8       *buf, tjs_uint len) {
 		if (!s) error(TJS_W("stream not opened."));
 		if (!len) return 0;
 
-		ULONG read = 0;
-		if (s->Read(buf, len, &read) != S_OK) error("read failed.");
-		return (tjs_uint)read;
+		return s->Read(buf, len);
 	}
-	static inline tjs_uint streamWrite(IStream *s, tjs_uint8 const *buf, tjs_uint len) {
+	static inline tjs_uint streamWrite(iTJSBinaryStream *s, tjs_uint8 const *buf, tjs_uint len) {
 		if (!s) error(TJS_W("stream not opened."));
 		if (!len) return 0;
 
-		ULONG write = 0;
-		if (s->Write(buf, len, &write) != S_OK || write != len) error("write failed.");
-		return (tjs_uint)write;
+		tjs_uint written = s->Write(buf, len);
+		if (written != len) error(TJS_W("write failed."));
+		return written;
 	}
 
 };
